@@ -1,0 +1,455 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
+
+*{
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: -20px;
+    overflow-x: hidden;
+}
+body {
+    font-family: 'Ubuntu', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: #333;
+    background-color: white;
+    padding: 20px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #222;
+}
+
+p {
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: #333;
+    z-index: 1000; /* Ensures the navbar is on top of the content */
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px;
+    background-color: #ffffff;
+    align-items: center;
+    width: 100%; /* Full width */
+    height: 50px;
+   
+}
+
+
+
+.navbar .logo {
+    font-size: 1.8em;
+    color: #ff893b;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+    color: #ff893b;
+}
+
+.navbar .register {
+    background-color: #ff893b;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.navbar .register:hover {
+    background-color: #d27730;
+}
+
+.welcome-section {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.welcome-section h1 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.welcome-section p {
+    font-size: 1.2em;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+.badge {
+    background: orange;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.features-section {
+    justify-content: space-between;
+    padding: 50px 50px;
+    background-color: #ffffff;
+}
+
+.features-text {
+    max-width: 50%;
+}
+
+.features-text h2 {
+    color: #ff893b;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.features-text h3 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.features-text p {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.features-text ul {
+    list-style: none;
+    padding: 0;
+}
+
+.features-text ul li {
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.features-text ul li:before {
+    content: '✔';
+    color: #ff893b;
+    margin-right: 10px;
+    font-weight: 700;
+}
+
+.features-buttons {
+    margin-top: 20px;
+}
+
+.features-buttons a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff893b;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    width: 100px;
+}
+
+.features-buttons a.learn-more {
+    background-color: #ffffff;
+    color: #ff893b;
+    border: 2px solid #ff893b;
+}
+
+.features-buttons a:hover {
+    background-color: #d27730;
+}
+
+.features-buttons a.learn-more:hover {
+    background-color: #ff893b;
+    color: #ffffff;
+}
+
+.features-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.our-story-section {
+    padding: 50px;
+    text-align: center;
+}
+
+.our-story-section h2 {
+    font-size: 2.2em;
+    margin-bottom: 40px;
+    font-weight: 700;
+    color: #333;
+}
+
+.story-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px; 
+}
+
+.story-card {
+    background-color: rgb(244, 232, 208);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    max-width: 320px; 
+    height: 400px; 
+    transition: box-shadow 0.3s;
+    margin: 0 auto; 
+}
+
+.story-card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.story-card h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #ff893b;
+}
+
+.story-card p {
+    font-size: 1.1em;
+    color: #666;
+    font-weight: 400;
+}
+
+
+
+.universities-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.universities-section h2 {
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.universities-section p {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.universities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px; 
+}
+
+.universities-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    height: 280px; 
+}
+
+.universities-card p {
+    font-size: 1em;
+    color: #666;
+    font-weight: 400;
+}
+
+.universities-card .author {
+    font-size: 0.9em;
+    color: #333;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.universities-card .author span {
+    font-size: 0.8em;
+    color: #ff893b;
+}
+
+.footer {
+background-color: #333; 
+color: #fff;            
+padding: 20px 0;      
+text-align: center;    
+}
+
+.footer-content {
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1200px; 
+margin: auto;     
+padding: 0 20px;  
+}
+
+.footer-logo .logo-img-footer {
+width: 150px; 
+}
+
+.footer-links ul {
+list-style: none;
+padding: 0;
+}
+
+.footer-links ul li {
+display: inline;
+margin: 0 10px;
+}
+
+.footer-links ul li a {
+color: #fff;
+text-decoration: none;
+}
+
+.footer-links ul li a:hover {
+text-decoration: underline;
+}
+
+.footer-contact p {
+margin: 5px 0;
+}
+
+.footer-bottom {
+border-top: 1px solid #444; 
+padding: 10px 0;
+font-size: 14px;
+}
+
+.contact-section {
+    padding: 50px;
+    text-align: center;
+}
+
+.contact-section h2 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.contact-section p {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.contact-form button {
+    background-color: #ff893b;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #d27730;
+}
+
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.content {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.contact {
+    flex: 0 0 300px; 
+}
+
+.story {
+    display: flex; /* Use Flexbox for layout */
+    align-items: center; /* Center align items vertically */
+    margin-bottom: 20px; /* Space between stories */
+}
+
+.story img {
+    margin-right: 20px; /* Space between image and text */
+}
+
+.story-text {
+    max-width: 600px; /* Optional: limit the text width */
+}
+
+.story-text h3 {
+    font-size: 1.5em; /* Adjust heading size */
+    margin-bottom: 10px; /* Space below heading */
+}
+
+.story-text p {
+    font-size: 1em; /* Adjust paragraph size */
+    color: #666; /* Adjust text color */
+}
+
