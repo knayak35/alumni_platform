@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("/Applications/XAMPP/sis-alumni-page/php/connect_db.php");
+include("php/connect_db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $currentUsername = $_SESSION['username'];

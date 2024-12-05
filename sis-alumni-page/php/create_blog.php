@@ -1,35 +1,34 @@
 <?php
 session_start();
-include("/Applications/XAMPP/sis-alumni-page/php/connect_db.php");
+include "connect_db.php";
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $success_message = "";
 $error_message = "";
-
-// Check if the user is logged in
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php"); // Redirect to login page if not logged in
-    exit();
-}
-
 $username = $_SESSION['username'];
 
-// Fetch the full name from the alumni_profiles table
-$sql = "SELECT full_name FROM alumni_profiles WHERE username = ?";
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
+// Retrieve alumni profile details
+$sql = "SELECT full_name, bio, university, major FROM alumni_profiles WHERE username = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($full_name);
+$stmt->bind_result($full_name, $bio, $university, $major);
 $stmt->fetch();
 $stmt->close();
 
-// Set the author value based on the logged-in user
-$author = $full_name; // Automatically filled from the alumni_profiles table
+$author = $full_name; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $content = $_POST['content'];
 
-    // Prepare the SQL statement to insert the new blog post
+
     $sql = "INSERT INTO blog_posts (title, author, content) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $title, $author, $content);

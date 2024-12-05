@@ -1,44 +1,37 @@
 <?php
-include '/Applications/XAMPP/sis-alumni-page/php/connect_db.php';
+include 'connect_db.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-if (isset($_POST['signup'])) {
-    $firstName = $_POST['fName'];
-    $lastName = $_POST['lName'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $password = md5($password);
-
-    $checkEmail = "SELECT * FROM alumni_accounts where email = '$email'";
-    $result = $conn->query($checkEmail);
-    if ($result->num_rows > 0) {
-        echo "Email Address already exists";
-    } else {
-        $insertQuery = "INSERT INTO alumni_accounts(firstName, lastName, email, password) VALUES ('$firstName', '$lastName', '$email', '$password')";
-        if ($conn->query($insertQuery) == TRUE) {
-            header("location: login.php");
-        } else {
-            echo "Error" . $conn->error;
-        }
-    }
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
 }
 
-if (isset($_POST['signin'])) {
+
+$sql = "SELECT * FROM alumni_profiles WHERE username = ? AND password = ?";
+$stmt = $conn->prepare($sql);
+
+if ($stmt) {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-
-    $sql = "SELECT * FROM alumni_profiles where username = '$username' and password = '$password'";
-    $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         session_start();
         $row = $result->fetch_assoc();
         $_SESSION['id'] = $row['id'];
         $_SESSION['username'] = $row['username'];
-        $_SESSION['password'] = $row['password'];
         $_SESSION['bio'] = $row['bio'];
+        $_SESSION['password'] = $row['password'];
         header("Location: homepage_alumni.php");
         exit();
     } else {
-        echo "Invalid Email or Password";
+        echo "Invalid Username or Password";
     }
+    $stmt->close();
+} else {
+    echo "Failed to prepare SQL statement: " . $conn->error;
 }
+?>

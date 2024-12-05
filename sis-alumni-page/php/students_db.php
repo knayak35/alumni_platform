@@ -15,7 +15,7 @@ if (isset($_POST['signup'])) {
     } else {
         $insertQuery = "INSERT INTO alumni_accounts(firstName, lastName, email, password) VALUES ('$firstName', '$lastName', '$email', '$password')";
         if ($conn->query($insertQuery) == TRUE) {
-            header("location: login.php");
+            header("location: homepage");
         } else {
             echo "Error" . $conn->error;
         }

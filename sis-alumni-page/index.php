@@ -62,18 +62,18 @@
             color: #ff5722;
         }
 
-        /* Welcome Section */
-        .welcome-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.3)), url('https://cdn-sekolah.annibuku.com/20338722/2.jpg') center/cover no-repeat;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
+/* Welcome Section with Parallax Effect */
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.teacherhorizons.com/static/mediav2/schools/3986/images/494968_main.jpg') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
 
         .welcome-section h1 {
             font-size: 48px;
@@ -124,48 +124,65 @@
             margin-bottom: 15px;
         }
 
-        /* Features Section */
-        .features-section {
-            background-color: #f9f9f9;
-            padding: 60px 20px;
-            text-align: center;
-        }
+   /* Features Section Styling */
+.features-section {
+    background-color: #f9f9f9;
+    padding: 60px 20px;
+    text-align: center;
+}
 
-        .features-section h1 {
-            font-size: 36px;
-            color: #ff5722;
-            margin-bottom: 40px;
-        }
+.features-title {
+    font-size: 36px;
+    color: #ff5722;
+    margin-bottom: 40px;
+}
 
-        .features-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+.features-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        .feature {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 300px;
-            transition: transform 0.3s;
-        }
+.feature {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    color: #ff5722;
+}
 
-        .feature:hover {
-            transform: translateY(-10px);
-        }
+.feature:hover {
+    transform: translateY(-5px);
+}
 
-        .feature h3 {
-            color: #ff5722;
-            margin-bottom: 15px;
-        }
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+}
 
-        .feature p {
-            font-size: 16px;
-            color: #555;
-        }
+.feature h3 {
+    font-size: 24px;
+    color: #ff5722;
+    margin-bottom: 15px;
+}
+
+.feature p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .features-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
 
         /* Universities Section */
         .universities-section {
@@ -179,6 +196,16 @@
             margin-bottom: 20px;
             color: #ff5722;
         }
+
+
+.universities-description {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 40px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
         .slideshow-container {
             display: flex;
@@ -197,25 +224,80 @@
             transform: scale(1.1);
         }
 
-        /* Login Section */
-        .login-section {
-            padding: 40px;
-            background-color: #f9f9f9;
-            text-align: center;
-        }
+/* General Section Styling */
+.login-section {
+    padding: 60px 20px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
 
-        .login-section h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: #ff5722;
-        }
+.login-title {
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 40px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-        .login-section p {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #666;
-            margin-bottom: 15px;
-        }
+/* Login Container and Boxes */
+.login-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+}
+
+.login-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 35px 30px;
+    width: 100%;
+    max-width: 450px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-box:hover {
+    transform: translateY(-8px);
+}
+
+.login-box h2 {
+    font-size: 30px;
+    color: #ff5722;
+    margin-bottom: 25px;
+}
+
+/* List Styling */
+.login-box ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+.login-box li {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* Button Styling */
+.login-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #ff5722;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #ff784e;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
 
         /* Footer */
         .footer-links {
@@ -250,45 +332,47 @@
             font-size: 14px;
         }
 
-        .unsdg-section {
-            text-align: center;
-            margin: 2rem 0;
-        }
 
-        .unsdg-section h2 {
-            color: #1a7e92;
-            font-size: 2rem;
-        }
 
-        .unsdg-section p {
-            font-weight: 500;
-            font-size: 1.2rem;
-            color: #444;
-        }
+/* UNSDG Section Styling */
+.unsdg-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        .content-wrapper {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
+.unsdg-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
 
-        .carousel {
-            display: flex;
-            overflow: hidden;
-            max-width: 400px;
-        }
+.unsdg-title {
+    font-size: 32px;
+    color: #ff5722;;
+    margin-bottom: 20px;
+}
 
-        .carousel-item {
-            min-width: 100%;
-            transition: transform 0.5s ease-in-out;
-        }
+.unsdg-description {
+    font-size: 18px;
+    color: #555;
+    max-width: 600px;
+    line-height: 1.6;
+}
 
-        .video-embed {
-            max-width: 400px;
-            width: 100%;
-        }
+.video-wrapper {
+    flex: 1;
+    width: 600px;
+    height: 350px; /* Adjust to desired height */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
         .carousel-controls {
             display: flex;
@@ -365,138 +449,136 @@
     </nav>
 
     <section class="welcome-section" id="home">
-        <h1>Reconnect, Share, and Grow Together</h1>
-        <p>Join the SIS Alumni Portal to reconnect with peers, share your story, and explore new opportunities in a supportive community!</p>
+        <h1>Stay Connected, Inspire, and Achieve</h1>
+        <p>Welcome to the SIS Alumni Portal - your gateway to rekindle connections, celebrate achievements, and build a thriving network for the future.</p>
     </section>
+    <section class="about-section" id="about" style="display: flex; align-items: center; justify-content: space-between; padding: 60px 20px;">
+    <!-- About Content on the Left -->
+    <div class="about-content" style="flex: 1; max-width: 50%;">
+        <h1 style="font-size: 36px; font-weight: 600; margin-bottom: 20px;">About the SIS Alumni Platform</h1>
+        <p style="font-size: 18px; line-height: 1.6; color: #333;">The SIS Alumni platform was created with a singular vision: to foster lasting connections between the generations of students who have walked through the halls of SIS schools.</p>
+        <p style="font-size: 18px; line-height: 1.6; color: #333;">Our goal is to create a thriving, supportive network where alumni can reconnect, share their achievements, and offer guidance to the next wave of graduates.</p>
+    </div>
+    
+    <!-- Image on the Far Right -->
+    <div style="flex: 1; display: flex; justify-content: flex-end;">
+        <img src="https://sisschools.org/wp-content/uploads/2022/08/SIS-KG-Graduation-2022.jpg" alt="Graduation" style="width: 100%; max-width: 800px; height: auto; border-radius: 2px;">
+    </div>
+</section>
 
-    <section class="about-section" id="about">
-        <img src="https://sisschools.org/wp-content/uploads/2022/08/SIS-KG-Graduation-2022.jpg" alt="Graduation">
-        <div class="about-content">
-            <h1>About the SIS Alumni Platform</h1>
-            <p>The SIS Alumni platform was created with a singular vision: to foster lasting connections between the generations of students who have walked through the halls of SIS schools.</p>
-            <p>Our goal is to create a thriving, supportive network where alumni can reconnect, share their achievements, and offer guidance to the next wave of graduates.</p>
+
+
+
+<section class="features-section" id="features" style="padding: 60px 20px; background-color: #f9f9f9;">
+    <h1 class="features-title" style="text-align: center; font-size: 36px; font-weight: 700; margin-bottom: 40px; color: #333;">
+        Explore Our Benefits
+    </h1>
+
+    <div class="features-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; justify-items: center;">
+        <div class="feature" style="text-align: center; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out;">
+            <img src="https://img.icons8.com/color/96/conference-call.png" alt="Networking Icon" class="feature-icon" style="width: 80px; height: 80px; margin-bottom: 20px; transition: transform 0.3s ease-in-out;">
+            <h3 style="font-size: 24px; font-weight: 600; color: #333;">Networking Opportunities</h3>
+            <p style="font-size: 16px; color: #555;">Connect with alumni worldwide and expand your professional network in meaningful ways.</p>
         </div>
-    </section>
-
-    <section class="features-section" id="features">
-        <h1>How We Can Help <strong style="color: rebeccapurple;">You</strong></h1>
-        <div class="features-container">
-            <div class="feature">
-                <h3>Networking Opportunities</h3>
-                <p>Connect with alumni worldwide and expand your professional network in meaningful ways.</p>
-            </div>
-            <div class="feature">
-                <h3>Career Support</h3>
-                <p>Access mentorship, job opportunities, and career advice from experienced alumni.</p>
-            </div>
-            <div class="feature">
-                <h3>Events and Meetups</h3>
-                <p>Stay updated on alumni events, reunions, and online webinars to engage with peers.</p>
-            </div>
-            <div class="features-container">
-                <div class="feature">
-                    <h3>Alumni Directory</h3>
-                    <p>Utilize the alumni directory to connect and collaborate with fellow graduates.</p>
-                </div>
-            </div>
-
-
+        <div class="feature" style="text-align: center; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out;">
+            <img src="https://img.icons8.com/color/96/event-accepted-tentatively.png" alt="Events Icon" class="feature-icon" style="width: 80px; height: 80px; margin-bottom: 20px; transition: transform 0.3s ease-in-out;">
+            <h3 style="font-size: 24px; font-weight: 600; color: #333;">Events and Meetups</h3>
+            <p style="font-size: 16px; color: #555;">Stay updated on alumni events, reunions, and online webinars to engage with peers.</p>
         </div>
-    </section>
+        <div class="feature" style="text-align: center; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease-in-out;">
+            <img src="https://img.icons8.com/color/96/address-book.png" alt="Directory Icon" class="feature-icon" style="width: 80px; height: 80px; margin-bottom: 20px; transition: transform 0.3s ease-in-out;">
+            <h3 style="font-size: 24px; font-weight: 600; color: #333;">Alumni Directory</h3>
+            <p style="font-size: 16px; color: #555;">Utilize the alumni directory to connect and collaborate with fellow graduates.</p>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Hover Effect for Features */
+    .feature:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Hover Effect for Icons */
+    .feature-icon:hover {
+        transform: scale(1.1);
+    }
+
+    /* Responsive Styling for smaller screens */
+    @media (max-width: 768px) {
+        .features-container {
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+    }
+</style>
+
+
 
 
     <section class="universities-section" id="universities">
-        <h2>Where Our Alumni Have Studied</h2>
-
-
-        <div class="slideshow-container">
-            <div class="scrolling-wrapper">
-
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/NITT_logo.png" alt="NIT Trichy" style="width: 200px;">
-                <img src="https://nus.edu.sg/images/default-source/identity-images/NUS_logo_full-horizontal.jpg" alt="NUS" style="width: 400px;">
-                <img src="https://blog.kobieducation.com/wp-content/uploads/2024/06/Logo-Imperial-College-London.webp" alt="Imperial College" style="width: 450px;">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe-Aq_HvIRoHN7bo-e2Bhjuz7NtSk5ac_ArQ&s" alt="Wharton School" style="width: 400px;">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4i9Wj9EVUKXhgjDjTuuRTFRL2Gpkeg74Epw&s" alt="Wharton School" style="width: 400px;">
-            </div>
-        </div>
-
-</body>
-
-</html>
-
-</section>
-<br><br>
-<div class="unsdg-section" style="display: flex; max-width: 1200px; margin: 0 100px;">
-    <div style="flex: 1; padding-right: 5px;">
-        <br><br>
-        <h2 style="color: #ff5722;">Making A Better World</h2><br><br>
-        <p>
-            At SIS Schools, we cultivate proactive leaders and change-makers by embedding the values of sustainability, equality, and social responsibility into our curriculum. Our students engage with real-world issues, empowering them to take meaningful action and make a positive impact on the global community.
-        </p>
-    </div>
-
-    <!-- YouTube Video Embed -->
-    <div class="video-embed" style="flex: 1;">
-        <iframe width="140%" height="350" src="https://www.youtube.com/embed/ynFNva5DUlk" title="UN Sustainable Development Goals"
-            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</div>
-
-
-
-
-
-<br><br>
-<section id="login" style="background-color: #ffffff; padding: 40px 0;">
     <br><br><br>
-    <h1 style="text-align: center; font-size: 40px; margin-bottom: 30px; color: #ff5722;">Get Started</h1>
+    <h2 class="universities-title">Where Our Alumni Have Studied</h2>
 
-    <div class="login-container" style="display: flex; justify-content: center; align-items: flex-start; margin: 0 20px; gap: 40px;">
+    <!-- Intro Text -->
+    <p class="universities-description">
+        Our alumni have pursued higher education at some of the most prestigious institutions across the globe. From leading engineering schools to renowned business programs, SIS graduates continue to excel and make their mark in various fields.
+    </p>
 
-        <div class="alumni_login" style="flex: 1; background-color: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
-            <h2 style="font-size: 30px; color: #ff5722;">For <strong style="color: orange;">Alumni</strong>:</h2><br>
-            <ul style="padding-left: 20px; list-style-position: inside;">
-                <li style="font-size: 20px; margin-bottom: 10px;">
-                    Login <a href="/php/login_alumni.php" style="color: #ff5722; text-decoration: underline;">Here</a>
-                </li>
-                <li style="font-size: 20px; margin-bottom: 10px;">Fill in your information - university, major, and a brief description about you.</li>
-                <li style="font-size: 20px; margin-bottom: 10px;">Upload a recent photo of yourself (preferably smiling!).</li>
-                <li style="font-size: 20px; margin-bottom: 10px;">Connect with other alumni and students.</li>
-                <li style="font-size: 20px;">This platform is evolving into a networking space for the SIS Group of schools, so stay tuned!</li>
-            </ul>
-        </div>
-
-        <div class="student_login" style="flex: 1; background-color: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
-            <h2 style="font-size: 30px; color: #ff5722;">For <strong style="color: orange;">Current Students</strong>:</h2><br>
-            <ul style="padding-left: 20px; list-style-position: inside;">
-                <li style="font-size: 20px; margin-bottom: 10px;">
-                    Login <a href="/php/login_student.php" style="color: #ff5722; text-decoration: underline;">Here</a> with your school email address.
-                </li>
-                <li style="font-size: 20px; margin-bottom: 10px;">Provide details about prospective universities and majors, your grade level, and a brief description about you.</li>
-                <li style="font-size: 20px; margin-bottom: 10px;">Upload a recent photo of yourself (preferably smiling!).</li>
-                <br><br><br><br>
-
-            </ul>
-        </div>
-
+    <!-- University Image -->
+    <div class="universities-image">
+        <img src="https://saigonsouth.sis.edu.vn/wp-content/uploads/sites/2/student_des.png" alt="SIS Graduates">
     </div>
 
+    <!-- Scrolling University Logos -->
+    <div class="slideshow-container">
+        <div class="scrolling-wrapper">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQlIT9i0bJ_HQsYT2-vecde02H8AiSNJzmA&s" alt="NIT Trichy" class="university-logo">
+            <img src="https://nus.edu.sg/images/default-source/identity-images/NUS_logo_full-horizontal.jpg" alt="NUS" class="university-logo">
+            <img src="https://blog.kobieducation.com/wp-content/uploads/2024/06/Logo-Imperial-College-London.webp" alt="Imperial College" class="university-logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe-Aq_HvIRoHN7bo-e2Bhjuz7NtSk5ac_ArQ&s" alt="Wharton School 1" class="university-logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4i9Wj9EVUKXhgjDjTuuRTFRL2Gpkeg74Epw&s" alt="Wharton School 2" class="university-logo">
+        </div>
     </div>
-    <br><br><br>
 </section>
 
 
+</section>
+
+<section id="login" class="login-section">
+    <h1 class="login-title">Get Started</h1>
+
+    <div class="login-container">
+        <!-- Alumni Login Section -->
+        <div class="login-box alumni-login">
+            <h2>For <strong>Alumni</strong>:</h2>
+            <ul>
+                <li>Fill in your information: university, major, and a brief description about yourself.</li>
+                <li>Upload a recent photo of yourself.</li>
+                <li>Connect with other alumni and students.</li>
+            </ul>
+            <a href="php/login_alumni.php" class="login-button">Login as Alumni</a>
+        </div>
+
+        <!-- Student Login Section -->
+        <div class="login-box student-login">
+            <h2>For <strong>Current Students</strong>:</h2>
+            <ul>
+                <li>Provide details about prospective universities, majors, and your grade level.</li>
+                <li>Write a brief description about yourself.</li>
+                <li>Upload a recent photo of yourself.</li>
+            </ul>
+            <a href="php/login_student.php" class="login-button">Login as Student</a>
+        </div>
+    </div>
+    <br><br><br>
+    <center><h3>Stay tuned! This platform is evolving into a networking space for SIS Group schools.</h3></center>
+</section>
 
 
+    <br><br><br>
 
-<footer class="footer-links">
-    <ul>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#privacy">Privacy Policy</a></li>
-    </ul>
-</footer>
 
 <footer class="footer-bottom">
     <p>&copy; 2024 SIS Alumni. All Rights Reserved.</p>
@@ -558,4 +640,6 @@
     // Duplicate all images to create an infinite scroll effect
     const clone = slideshowContainer.cloneNode(true);
     slideshowContainer.parentNode.appendChild(clone);
+
+    
 </script>

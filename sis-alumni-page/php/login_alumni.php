@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +35,8 @@
             justify-content: center;
             background-color: #fff;
             box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
 
         .form-title {
@@ -61,11 +62,13 @@
 
         .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 2px solid #ccc;
+            padding: 8px 0;
+            border: none;
+            border-bottom: 2px solid #ccc;
             font-size: 16px;
             transition: border-color 0.3s ease;
+            background: none;
+            color: #333;
         }
 
         .input-group input:focus {
@@ -75,12 +78,10 @@
 
         .input-group label {
             position: absolute;
-            left: 15px;
-            top: -10px;
-            background-color: #fff;
-            padding: 0 8px;
-            color: #ff5722;
+            left: 0;
+            top: -20px;
             font-size: 14px;
+            color: #ff5722;
             font-weight: 500;
         }
 
@@ -88,14 +89,15 @@
             background-color: #ff5722;
             color: white;
             border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
+            padding: 10px 0;
+            width: 100px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
             letter-spacing: 1px;
             transition: background-color 0.3s ease;
+            margin-top: 15px;
         }
 
         .btn:hover {
@@ -124,23 +126,28 @@
 
     <div class="image-section"></div>
     <div class="form-section" id="signin">
+        <center><img src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" style="width: 100px;"></center>
+        <br><br>
         <h1 class="notice">ALUMNI SIGN IN</h1>
         <h1 class="form-title">Sign In</h1>
+        <br><br><br>
         <form method="post" action="alumni_db.php">
             <div class="input-group">
-                <input type="text" name="username" id="username" placeholder="Username" required>
+                <input type="text" name="username" id="username" required>
                 <label for="username">Username</label>
             </div>
+            <br><br>
             <div class="input-group">
-                <input type="password" name="password" id="password" placeholder="Password" required>
+                <input type="password" name="password" id="password" required>
                 <label for="password">Password</label>
             </div>
-            <input type="submit" class="btn" value="Sign In" name="signin">
+            <br><br>
+            <center>
+            <input type="submit" class="btn" value="SIGN IN" name="signin">
+            </center>
         </form>
     </div>
 
 </body>
 
 </html>
-
-<script src="/js/script.js"></script>

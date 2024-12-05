@@ -1,21 +1,26 @@
 <?php
 session_start();
-include("/Applications/XAMPP/sis-alumni-page/php/connect_db.php");
+include "connect_db.php";
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $success_message = "";
 $error_message = "";
 $username = $_SESSION['username'];
-// Assuming 'username' in the session corresponds to the username in 'alumni_profiles'
 
-$sql = "SELECT full_name FROM alumni_profiles WHERE username = ?";
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT full_name, bio, university, major FROM alumni_profiles WHERE username = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($full_name);
+$stmt->bind_result($full_name, $bio, $university, $major);
 $stmt->fetch();
 $stmt->close();
 
-// Set the author value based on the logged-in user
 $author = $full_name; // Automatically filled from the alumni_profiles table
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -50,68 +55,69 @@ $conn->close();
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <style>
-        /* Your existing CSS here */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #90c8f0;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
 
-        .dashboard {
-            display: flex;
-            min-height: 100vh;
-        }
+    .dashboard {
+        display: flex;
+        min-height: 100vh;
+    }
 
-        .sidebar {
-            background-color: #fff;
-            width: 250px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
-            transition: width 0.3s ease;
-        }
+    .sidebar {
+        background-color: white;
+        width: 250px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        color: white;
+    }
 
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 40px;
-            color: #0073b1;
-        }
+    .sidebar h2 {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
 
-        .sidebar ul li {
-            margin-bottom: 20px;
-        }
+    .sidebar ul li {
+        margin-bottom: 20px;
+    }
 
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 16px;
-            transition: color 0.3s ease;
-            padding: 8px 0;
-            display: block;
-        }
+    .sidebar ul li a {
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+        padding: 8px 0;
+        display: block;
+    }
 
-        .sidebar ul li a:hover {
-            color: #0073b1;
-            font-weight: 500;
-        }
+    .sidebar ul li a:hover {
+        color: orange;
+        font-weight: 500;
+    }
 
-        .content {
-            flex: 1;
-            margin-left: 270px;
-            padding: 40px;
-            background-color: #f4f4f4;
-            overflow-y: auto;
-        }
+    .content {
+        margin-left: 270px; /* Adjust margin to ensure it clears the sidebar */
+        padding: 40px;
+        overflow-y: auto;
+    }
+
+    .content h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #333;
+    }
 
         .content h1 {
             font-size: 28px;
@@ -159,6 +165,11 @@ $conn->close();
             border-color: #0073b1;
         }
 
+        .form-group textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
         .button-container {
             text-align: right;
             margin-top: 20px;
@@ -179,21 +190,88 @@ $conn->close();
             background-color: #005f8d;
         }
 
-        /* Quill editor styles */
-        .quill-editor {
-            height: 300px;
-            /* Set desired height */
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .right-sidebar {
+            width: 250px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .right-sidebar h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #0073b1;
+        }
+
+        .notification {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+
+        .notification:last-child {
+            border-bottom: none;
+        }
+
+        .notification:hover {
+            background-color: #f0f8ff;
+        }
+
+        .notification p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .notification time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .content {
+                margin-left: 220px;
+            }
+
+            .right-sidebar {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .right-sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="dashboard">
-        <div class="sidebar">
-            <h2>Alumni Dashboard</h2>
-            <ul>
+<div class="sidebar" id="sidebar">
+<img src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" style="width: 100px; height: 100px; margin-left: 60px;">
+            <h2 style="color: black; margin-left: 20px;">Alumni Dashboard</h2>
+             <ul>
                 <li><a href="main_alumni.php">Home</a></li>
                 <li><a href="homepage_alumni.php">My Profile</a></li>
                 <li><a href="connections.php">Connections</a></li>
@@ -202,7 +280,7 @@ $conn->close();
         </div>
 
         <div class="content">
-            <h1>Create a New Blog Post</h1>
+            <h1 style="color: white;">Create a New Blog Post</h1>
             <div class="profile-card">
                 <?php if (!empty($success_message)) : ?>
                     <p style="color: green;"><?php echo $success_message; ?></p>
@@ -229,6 +307,7 @@ $conn->close();
                         <textarea name="content" id="content" style="display: none;"></textarea>
                     </div>
 
+                    
                     <div class="button-container">
                         <button class="save-button" type="submit">Submit</button>
                     </div>
@@ -236,27 +315,28 @@ $conn->close();
             </div>
         </div>
     </div>
+    </html>
 
     <script>
         var quill = new Quill('#editor', {
             theme: 'snow',
             modules: {
                 toolbar: [
-                    ['bold', 'italic', 'underline'],
-                    ['link', 'image'],
-                    [{
-                        list: 'ordered'
-                    }, {
-                        list: 'bullet'
-                    }]
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'indent': '-1' }, { 'indent': '+1' }],
+                    [{ 'align': [] }],
+                    ['link', 'image']
                 ]
             }
         });
 
-        document.querySelector('form').onsubmit = function() {
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function (e) {
             var content = document.querySelector('#content');
-            content.value = quill.root.innerHTML; // Get HTML content from Quill editor
-        };
+            content.value = JSON.stringify(quill.getContents());
+        });
     </script>
 </body>
 

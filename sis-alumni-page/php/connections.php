@@ -1,21 +1,25 @@
 <?php
 session_start();
-include("/Applications/XAMPP/sis-alumni-page/php/connect_db.php");
+include "connect_db.php";
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$success_message = "";
+$error_message = "";
 $username = $_SESSION['username'];
 
-// Fetch full name of the logged-in user
-$sql = "SELECT full_name FROM alumni_profiles WHERE username = ?";
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
+// Query to retrieve all alumni profiles except the currently logged-in user
+$sql = "SELECT full_name, bio, university, major, username FROM alumni_profiles WHERE username != ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($full_name);
-$stmt->fetch();
+$result = $stmt->get_result();
 $stmt->close();
-
-// Fetch all alumni profiles from the database, including university and major
-$sql = "SELECT username, full_name, bio, university, major FROM alumni_profiles";
-$result = $conn->query($sql);
 
 $conn->close();
 ?>
@@ -29,13 +33,13 @@ $conn->close();
     <title>Connections</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #90c8f0;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
 
         .dashboard {
             display: flex;
@@ -43,51 +47,49 @@ $conn->close();
         }
 
         .sidebar {
-            background-color: #fff;
-            width: 250px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
-            transition: width 0.3s ease;
-        }
+        background-color: white;
+        width: 250px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        color: white;
+    }
 
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 40px;
-            color: #0073b1;
-        }
+    .sidebar h2 {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
 
-        .sidebar ul li {
-            margin-bottom: 20px;
-        }
+    .sidebar ul li {
+        margin-bottom: 20px;
+    }
 
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 16px;
-            transition: color 0.3s ease;
-            padding: 8px 0;
-            display: block;
-        }
+    .sidebar ul li a {
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+        padding: 8px 0;
+        display: block;
+    }
 
-        .sidebar ul li a:hover {
-            color: #0073b1;
-            font-weight: 500;
-        }
+    .sidebar ul li a:hover {
+        color: orange;
+        font-weight: 500;
+    }
 
         .content {
             flex: 1;
             margin-left: 270px;
             padding: 40px;
-            background-color: #f4f4f4;
+            background-color: #90c8f0;
             overflow-y: auto;
         }
 
@@ -137,7 +139,7 @@ $conn->close();
         }
 
         .connect-button {
-            background-color: #0073b1;
+            background-color: orange;
             color: white;
             border: none;
             border-radius: 5px;
@@ -153,7 +155,6 @@ $conn->close();
     </style>
     <script>
         function connectNow(username) {
-            // Send a connection request to the server using AJAX
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "connect_request.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -169,9 +170,10 @@ $conn->close();
 
 <body>
     <div class="dashboard">
-        <div class="sidebar">
-            <h2>Alumni Dashboard</h2>
-            <ul>
+    <div class="sidebar" id="sidebar">
+<img src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" style="width: 100px; height: 100px; margin-left: 60px;">
+            <h2 style="color: black; margin-left: 20px;">Alumni Dashboard</h2>
+             <ul>
                 <li><a href="main_alumni.php">Home</a></li>
                 <li><a href="homepage_alumni.php">My Profile</a></li>
                 <li><a href="connections.php">Connections</a></li>
@@ -180,7 +182,7 @@ $conn->close();
         </div>
 
         <div class="content">
-            <h1>Connections</h1>
+            <h1 style="color: white">Connections</h1>
 
             <div class="card-container">
                 <?php if ($result->num_rows > 0): ?>
@@ -189,7 +191,7 @@ $conn->close();
                             <h2 class="profile-name"><?php echo htmlspecialchars($row['full_name']); ?></h2>
                             <div class="profile-university">University: <?php echo htmlspecialchars($row['university']); ?></div>
                             <div class="profile-major">Major: <?php echo htmlspecialchars($row['major']); ?></div>
-                            <div class="profile-bio">Bio: <?php echo nl2br(htmlspecialchars($row['bio'])); ?></div>
+                            <div class="profile-bio"><?php echo nl2br(htmlspecialchars($row['bio'])); ?></div>
                             <button class="connect-button" onclick="connectNow('<?php echo htmlspecialchars($row['username']); ?>')">Connect Now!</button>
                         </div>
                     <?php endwhile; ?>
