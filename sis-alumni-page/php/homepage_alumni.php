@@ -606,7 +606,6 @@ $conn->close();
                 <li><a href="homepage_alumni.php">Update My Profile</a></li>
                 <li><a href="connections.php">My Connections</a></li>
                 <li><a href="blog.php">Blogs</a></li>
-                <li><a href="forum.php">Student Forum</a></li>
             </ul>
         </div>
 
