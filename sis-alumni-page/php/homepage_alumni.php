@@ -202,16 +202,21 @@ $conn->close();
         }
 
         .toggle-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #0073b1;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            z-index: 1100;
-        }
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color:rgb(131, 162, 233);
+    color: white;
+    border: none;
+    width: 40px; /* Set equal width and height */
+    height: 40px;
+    border-radius: 50%; /* Makes the button circular */
+    cursor: pointer;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content inside the button */
+}
 
         .content {
             flex: 1;
@@ -598,6 +603,7 @@ $conn->close();
 
 <body>
     <div class="dashboard">
+    <button class="toggle-button" id="toggleButton">☰</button>
     <div class="sidebar" id="sidebar">
             <img src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" style="width: 100px; height: 100px; margin-left: 60px;">
             <h2 style="color: black; margin-left: 15px;">Alumni Dashboard</h2>
@@ -606,10 +612,11 @@ $conn->close();
                 <li><a href="homepage_alumni.php">Update My Profile</a></li>
                 <li><a href="connections.php">My Connections</a></li>
                 <li><a href="blog.php">Blogs</a></li>
+                <li><a href="forum.php">Student Forum</a></li>
             </ul>
         </div>
 
-        <div class="content" id="content">
+        <div class="content" id="content"><br>
     <strong><b><h1>Update Your Profile</h1></b></strong>
     <div class="profile-card">
         <form action="homepage_alumni.php" method="POST" enctype="multipart/form-data">
@@ -682,20 +689,6 @@ $conn->close();
 
 
     <script>
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const content = document.getElementById('content');
-    const toggleIcon = document.getElementById('toggle-icon');
-
-    sidebar.classList.toggle('hidden');
-    content.classList.toggle('full-width');
-
-    if (sidebar.classList.contains('hidden')) {
-        toggleIcon.textContent = '>';
-    } else {
-        toggleIcon.textContent = '<';
-    }
-}
 
 function saveChanges() {
     alert("Profile saved successfully!")
@@ -723,6 +716,14 @@ dropdown.addEventListener('change', function () {
   dropdown.style.color = selectedOption.style.color;
 });
 
+const toggleButton = document.getElementById('toggleButton');
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('full-width');
+        });
 
     </script>
 </body>
