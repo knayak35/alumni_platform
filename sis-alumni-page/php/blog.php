@@ -13,11 +13,11 @@ if (!$conn) {
     die("Database connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT full_name, bio, university, major FROM alumni_profiles WHERE username = ?";
+$sql = "SELECT id, full_name, bio, university, major FROM alumni_profiles WHERE username = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($full_name, $bio, $university, $major);
+$stmt->bind_result($id, $full_name, $bio, $university, $major);
 $stmt->fetch();
 $stmt->close();
 
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $author = $_POST['author']; // This will already be filled from the session
     $content = $_POST['content'];
 
-    $sql = "INSERT INTO blog_posts (title, author, content) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO blog_posts (title, author, content) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $title, $author, $content);
 
@@ -55,69 +55,69 @@ $conn->close();
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <style>
-      body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #90c8f0;
-        margin: 0;
-        padding: 0;
-        color: #333;
-    }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffd1b3;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-    .dashboard {
-        display: flex;
-        min-height: 100vh;
-    }
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
 
-    .sidebar {
-        background-color: white;
-        width: 250px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        overflow-y: auto;
-        color: white;
-    }
 
-    .sidebar h2 {
-        font-size: 24px;
-        margin-bottom: 40px;
-    }
+        .sidebar {
+            background-color: #e6eaeb;
+            width: 250px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+            z-index: 1000;
+            color: white;
+        }
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
 
-    .sidebar ul {
-        list-style: none;
-        padding: 0;
-    }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
 
-    .sidebar ul li {
-        margin-bottom: 20px;
-    }
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
 
-    .sidebar ul li a {
-        text-decoration: none;
-        font-size: 16px;
-        transition: color 0.3s ease;
-        padding: 8px 0;
-        display: block;
-    }
+        .sidebar ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            padding: 8px 0;
+            display: block;
+        }
 
-    .sidebar ul li a:hover {
-        color: orange;
-        font-weight: 500;
-    }
+        .sidebar ul li a:hover {
+            color: orange;
+            font-weight: 500;
+        }
 
-    .content {
-        margin-left: 270px; /* Adjust margin to ensure it clears the sidebar */
-        padding: 40px;
-        overflow-y: auto;
-    }
 
-    .content h1 {
-        font-size: 28px;
-        margin-bottom: 20px;
-        color: #333;
-    }
+        .content {
+            flex: 1;
+            margin-left: 270px;
+            padding: 40px;
+            background-color: #ffd1b3;
+            transition: margin-left 0.3s ease;
+        }
 
         .content h1 {
             font-size: 28px;
@@ -264,23 +264,42 @@ $conn->close();
                 height: auto;
             }
         }
+
+        .toggle-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color:rgb(131, 162, 233);
+    color: white;
+    border: none;
+    width: 40px; /* Set equal width and height */
+    height: 40px;
+    border-radius: 50%; /* Makes the button circular */
+    cursor: pointer;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content inside the button */
+}
     </style>
 </head>
 
 <body>
 <div class="sidebar" id="sidebar">
-<img src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" style="width: 100px; height: 100px; margin-left: 60px;">
-            <h2 style="color: black; margin-left: 20px;">Alumni Dashboard</h2>
-             <ul>
-                <li><a href="main_alumni.php">Home</a></li>
-                <li><a href="homepage_alumni.php">My Profile</a></li>
-                <li><a href="connections.php">Connections</a></li>
+<button class="toggle-button" id="toggleButton">☰</button>
+            <img src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" style="width: 100px; height: 100px; margin-left: 60px;">
+            <h2 style="color: black; margin-left: 15px;">Alumni Dashboard</h2>
+            <ul>
+                <li><a href="main_alumni.php">Home Page</a></li>
+                <li><a href="homepage_alumni.php">Update My Profile</a></li>
+                <li><a href="connections.php">My Connections</a></li>
                 <li><a href="blog.php">Blogs</a></li>
+                <li><a href="forum.php">Student Forum</a></li>
             </ul>
         </div>
 
         <div class="content">
-            <h1 style="color: white;">Create a New Blog Post</h1>
+            <h1>Create a New Blog Post</h1>
             <div class="profile-card">
                 <?php if (!empty($success_message)) : ?>
                     <p style="color: green;"><?php echo $success_message; ?></p>
@@ -290,15 +309,21 @@ $conn->close();
                     <p style="color: red;"><?php echo $error_message; ?></p>
                 <?php endif; ?>
 
-                <form action="create_blog.php" method="POST">
+                <form action="create_blog.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="title">Title</label>
                         <input type="text" id="title" name="title" required>
                     </div>
 
                     <div class="form-group">
+                        <label for="thumbnail">Thumbnail</label>
+                        <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="author">Author</label>
-                        <input type="text" id="author" name="author" value="<?php echo htmlspecialchars($author); ?>" readonly>
+                        <input type="text" id="label_author" name="label_author" value="<?php echo htmlspecialchars($author); ?>" readonly>
+                        <input type="hidden" id="author" name="author" value="<?= $id ?>" readonly>
                     </div>
 
                     <div class="form-group">
@@ -309,13 +334,12 @@ $conn->close();
 
                     
                     <div class="button-container">
-                        <button class="save-button" type="submit">Publish</button>
+                        <button class="save-button" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    </html>
 
     <script>
         var quill = new Quill('#editor', {
@@ -337,6 +361,16 @@ $conn->close();
             var content = document.querySelector('#content');
             content.value = JSON.stringify(quill.getContents());
         });
+
+        const toggleButton = document.getElementById('toggleButton');
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('full-width');
+        });
+
     </script>
 </body>
 
