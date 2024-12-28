@@ -26,8 +26,8 @@
             margin: 0;
         }
 
-        /* Navbar */
-        .navbar {
+            /* Navbar */
+            .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -62,6 +62,39 @@
             color: #ff5722;
         }
 
+        /* Dropdown styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color:rgb(251, 251, 251);
+        }
 /* Welcome Section with Parallax Effect */
 .welcome-section {
     display: flex;
@@ -437,14 +470,23 @@
 </head>
 
 <body>
-    <nav class="navbar">
+<nav class="navbar" style="margin-right: 50px;">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYkSOVeN6PgmTy4PN0fieR5d49Q_BUNpKxaQ&s" alt="Logo">
         <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#universities">Universities</a></li>
-            <li><a href="#login">Login</a></li>
+
+            <!-- Dropdown for Login -->
+            <li class="dropdown">
+                <a href="#" class="dropbtn" style="margin-right: 70px;">Login</a>
+                <div class="dropdown-content">
+                    <a href="php/login_alumni.php">Login as Alumni</a>
+                    <a href="php/login_student.php">Login as Current Students</a>
+                    <a href="#">Login as Staff</a>
+                </div>
+            </li>
         </ul>
     </nav>
 
@@ -545,40 +587,6 @@
 
 
 </section>
-
-<section id="login" class="login-section">
-    <h1 class="login-title">Get Started</h1>
-
-    <div class="login-container">
-        <!-- Alumni Login Section -->
-        <div class="login-box alumni-login">
-            <h2>For <strong>Alumni</strong>:</h2>
-            <ul>
-                <li>Fill in your information: university, major, and a brief description about yourself.</li>
-                <li>Upload a recent photo of yourself.</li>
-                <li>Connect with other alumni and students.</li>
-            </ul>
-            <a href="php/login_alumni.php" class="login-button">Login as Alumni</a>
-        </div>
-
-        <!-- Student Login Section -->
-        <div class="login-box student-login">
-            <h2>For <strong>Current Students</strong>:</h2>
-            <ul>
-                <li>Provide details about prospective universities, majors, and your grade level.</li>
-                <li>Write a brief description about yourself.</li>
-                <li>Upload a recent photo of yourself.</li>
-            </ul>
-            <a href="php/login_student.php" class="login-button">Login as Student</a>
-        </div>
-    </div>
-    <br><br><br>
-    <center><h3>Stay tuned! This platform is evolving into a networking space for SIS Group schools.</h3></center>
-</section>
-
-
-    <br><br><br>
-
 
 <footer class="footer-bottom">
     <p>&copy; 2024 SIS Alumni. All Rights Reserved.</p>
