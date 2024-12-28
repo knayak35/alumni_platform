@@ -309,7 +309,7 @@ $conn->close();
 
                     
                     <div class="button-container">
-                        <button class="save-button" type="submit">Submit</button>
+                        <button class="save-button" type="submit">Publish</button>
                     </div>
                 </form>
             </div>
