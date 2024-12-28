@@ -22,16 +22,16 @@ if (!$conn) {
 }
 
 // Retrieve alumni profile details
-$sql = "SELECT full_name, bio, university, major FROM alumni_profiles WHERE username = ?";
+$sql = "SELECT full_name, bio, university, major, file_name FROM alumni_profiles WHERE username = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$stmt->bind_result($full_name, $bio, $university, $major);
+$stmt->bind_result($full_name, $bio, $university, $major, $file_name);
 $stmt->fetch();
 $stmt->close();
 
 // Retrieve all blog posts
-$sql_blog = "SELECT title, author, content, created_at FROM blog_posts";
+$sql_blog = "SELECT title, author, content, alumni_profiles.full_name, alumni_profiles.file_name, blog_posts.thumbnail, blog_posts.created_at FROM blog_posts LEFT JOIN alumni_profiles on blog_posts.author = alumni_profiles.id";
 $result = $conn->query($sql_blog);
 
 // Close the connection
@@ -49,7 +49,7 @@ $conn->close();
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
+            background-color: #ffd1b3;
             margin: 0;
             padding: 0;
             color: #333;
@@ -105,8 +105,8 @@ $conn->close();
             flex: 1;
             margin-left: 270px;
             padding: 40px;
-            background-color: #f4f4f4;
-            overflow-y: auto;
+            background-color: #03c2fc;
+            transition: margin-left 0.3s ease;
         }
 
         .content h1 {
@@ -153,13 +153,6 @@ $conn->close();
             margin-top: 10px;
             text-align: right;
         }
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
 
         .dashboard {
             display: flex;
@@ -167,7 +160,7 @@ $conn->close();
         }
 
         .sidebar {
-            background-color: orange;
+            background-color: #e6eaeb;
             width: 250px;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -175,8 +168,10 @@ $conn->close();
             top: 0;
             bottom: 0;
             overflow-y: auto;
-            transition: width 0.3s ease;
-            color: white
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+            z-index: 1000;
+            color: white;
         }
 
         .sidebar h2 {
@@ -360,55 +355,52 @@ $conn->close();
             }
         }
 
-        .collapse-btn {
-            background-color: #0073b1;
-            color: white;
-            border: none;
-            padding: 10px;
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
             font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
             cursor: pointer;
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            transition: background-color 0.3s ease;
         }
 
-        .collapse-btn:hover {
-            background-color: #005f8d;
+        .back-button:hover {
+            background-color: #0056b3;
         }
-
     </style>
 </head>
 
 <body>
 <div class="sidebar" id="sidebar">
+<button class="toggle-button" id="toggleButton">☰</button>
             <img src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" style="width: 100px; height: 100px; margin-left: 60px;">
-            <h2 style="color: black; margin-left: 20px;">Alumni Dashboard</h2>
+            <h2 style="color: black; margin-left: 15px;">Alumni Dashboard</h2>
             <ul>
-                <li><a href="main_alumni.php">Home</a></li>
-                <li><a href="homepage_alumni.php" >My Profile</a></li>
-                <li><a href="connections.php">Connections</a></li>
+                <li><a href="main_alumni.php">Home Page</a></li>
+                <li><a href="homepage_alumni.php">Update My Profile</a></li>
+                <li><a href="connections.php">My Connections</a></li>
                 <li><a href="blog.php">Blogs</a></li>
+                <li><a href="forum.php">Student Forum</a></li>
             </ul>
         </div>
 
         <div class="content">
-    <h2 style="color: white; font-size: 2em; margin-bottom: 20px;">Featured</h2>
-    <div class="featured-blog-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; justify-items: center;">
+    <h2>Featured</h2>
+    <div class="featured-blog-grid">
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="featured-blog-card" style="display: flex; width: 100%; max-width: 600px; background-color: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
-                    <!-- Image on the left -->
-                    <img class="featured-blog-image" src="https://sisschools.org/wp-content/uploads/2018/03/SIS-Logo-Website-200x200.png" alt="Blog Image" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px 0 0 8px;">
-                    
-                    <!-- Text on the right -->
-                    <div class="featured-blog-text" style="padding: 15px; display: flex; flex-direction: column; justify-content: space-between; width: calc(100% - 150px);">
-                        <h3 class="featured-blog-title" style="font-size: 1.4em; font-weight: bold; color: #333; margin-bottom: 10px;"><?php echo htmlspecialchars($row['title']); ?></h3>
-                        <p class="featured-blog-description" style="color: #555; font-size: 1em; margin-bottom: 10px;"><?php echo nl2br(substr($row['content'], 0, 120)); ?>...</p>
-                        <div class="featured-blog-meta" style="font-size: 0.9em; color: #888; display: flex; align-items: center; gap: 10px;">
-                            <img class="author-avatar" src="https://via.placeholder.com/40" alt="Author" style="border-radius: 50%; width: 40px; height: 40px;">
-                            <span class="blog-author"><?php echo htmlspecialchars($row['author']); ?></span>
+                <div class="featured-blog-card">
+                    <img class="featured-blog-image" src="uploads/<?= $row['thumbnail'] ?>" alt="Blog Image">
+                    <div class="featured-blog-text">
+                        <h3 class="featured-blog-title"><?php echo htmlspecialchars($row['title']); ?></h3>
+                        <p class="featured-blog-description"><?php echo nl2br(substr($row['content'], 0, 120)); ?>...</p>
+                        <div class="featured-blog-meta">
+                            <img class="author-avatar" src="uploads/<?= $row['file_name'] ?>" alt="Author">
+                            <span class="blog-author"><?php echo htmlspecialchars($row['full_name']); ?></span>
                             <span class="blog-date"><?php echo date("d M Y", strtotime($row['created_at'])); ?></span>
                         </div>
                     </div>
@@ -420,28 +412,11 @@ $conn->close();
     </div>
 </div>
 
-<script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const content = document.querySelector(".content");
-
-            if (sidebar.style.width === "0px") {
-                sidebar.style.width = "250px";
-                content.style.marginLeft = "270px"; // Adjust content when sidebar expands
-            } else {
-                sidebar.style.width = "0px";
-                content.style.marginLeft = "80px"; // Adjust content when sidebar collapses
-            }
-        }
-    </script>
-
-        </body>
-
 
 <style>
-      body {
+    body {
         font-family: 'Roboto', sans-serif;
-        background-color: #90c8f0;
+        background-color: #ffd1b3;
         margin: 0;
         padding: 0;
         color: #333;
@@ -453,16 +428,19 @@ $conn->close();
     }
 
     .sidebar {
-        background-color: white;
-        width: 250px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        overflow-y: auto;
-        color: white;
-    }
+            background-color: #e6eaeb;
+            width: 250px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+            z-index: 1000;
+            color: white;
+        }
 
     .sidebar h2 {
         font-size: 24px;
@@ -492,11 +470,12 @@ $conn->close();
     }
 
     .content {
-        margin-left: 270px; /* Adjust margin to ensure it clears the sidebar */
-        padding: 40px;
-        background-color: #90c8f0;
-        overflow-y: auto;
-    }
+            flex: 1;
+            margin-left: 270px;
+            padding: 40px;
+            background-color: #ffd1b3;
+            transition: margin-left 0.3s ease;
+        }
 
     .content h1 {
         font-size: 28px;
@@ -583,4 +562,33 @@ $conn->close();
             width: 100%; /* Full width on very small screens */
         }
     }
+
+    .toggle-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color:rgb(131, 162, 233);
+    color: white;
+    border: none;
+    width: 40px; /* Set equal width and height */
+    height: 40px;
+    border-radius: 50%; /* Makes the button circular */
+    cursor: pointer;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content inside the button */
+}
 </style>
+
+<script>
+    const toggleButton = document.getElementById('toggleButton');
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            content.classList.toggle('full-width');
+        });
+
+    </script>
